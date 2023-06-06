@@ -17,10 +17,6 @@ class Car {
             db.fetchPersonalBest(this.driver_guid, (laptime) => {
                 this.best = laptime;
             });
-            db.fetchParticipant(this.driver_guid, (data) => {
-                this.participant_number = data.number;
-                this.laps = data.laps;
-            });
         }
     }
     updateRecord(laptime) {
@@ -48,7 +44,7 @@ class DB {
         this.fetchTrackBest();
     }
     reset (car_id) {
-        this.cars[car_id] = new Car();
+        this.cars[car_id] = new Car(this);
     }
     set (key, value) {
         this[key] = value;
