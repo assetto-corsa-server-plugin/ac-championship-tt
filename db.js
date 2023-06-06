@@ -23,6 +23,10 @@ class Car {
             });
         }
     }
+
+    completeLap () {
+        this.laps++;
+    }
 }
 
 class DB {
