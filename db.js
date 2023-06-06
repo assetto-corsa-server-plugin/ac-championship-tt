@@ -17,15 +17,11 @@ class Car {
             db.fetchPersonalBest(this.driver_guid, (laptime) => {
                 this.best = laptime;
             });
+            db.fetchParticipant(this.driver_guid, (data) => {
+                this.participant_number = data.number;
+                this.laps = data.laps;
+            });
         }
-    }
-    updateRecord(laptime) {
-        if (this.best === undefined || this.best > laptime) {
-            this.best = laptime;
-        }
-    }
-    completeLap () {
-        this.laps++;
     }
 }
 

@@ -15,18 +15,9 @@ app.on(protocols.NEW_CONNECTION, (data) => {
         app.kick(data.car_id);
         return;
     }
-    db.fetchParticipant(data.guid, (data2) => {
-        if (!data2) {
-            app.kick(data.car_id);
-        } else {
-            db.newCar(app, data.car_id, {
-                participant_number: data2.number,
-                laps: data2.laps,
-                driver_guid: data.guid,
-                name: data.name
-            });
-
-        }
+    db.newCar(data.car_id, {
+        driver_guid: data.guid,
+        name: data.name
     });
 });
 
@@ -45,19 +36,11 @@ app.on(protocols.CONNECTION_CLOSED, (data) => {
 
 app.on(protocols.CAR_INFO, (data) => {
     if (!data.connected) return; 
-    db.fetchParticipant(data.guid, (data2) => {
-        if (!data2) {
-            app.kick(data.car_id);
-        } else {
-            db.newCar(app, data.car_id, {
-                participant_number: data2.number,
-                laps: data2.laps,
-                driver_guid: data.guid,
-                name: data.name
-            });
-        }
+    db.newCar(data.car_id, {
+        driver_guid: data.guid,
+        name: data.name
     });
-})
+});
 
 app.on(protocols.CHAT, (data) => {
     const msg = data.message;
